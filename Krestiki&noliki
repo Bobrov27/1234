@@ -1,0 +1,242 @@
+import pygame
+import sys
+
+pygame.init()
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 600
+SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Крестики-нолики')
+
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+
+GRID_SIZE = 3
+
+
+board = [[' ' for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+
+
+current_player = 'X'
+
+
+running = True
+while running:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+
+            pos = pygame.mouse.get_pos()
+
+            i = pos[0] // (SCREEN_WIDTH // GRID_SIZE)
+            j = pos[1] // (SCREEN_HEIGHT // GRID_SIZE)
+
+
+            if board[i][j] == ' ':
+
+                board[i][j] = current_player
+
+                current_player = 'O' if current_player == 'X' else 'X'
+
+    SCREEN.fill(BLACK)
+
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            pygame.draw.rect(SCREEN, WHITE, ((i * SCREEN_WIDTH // GRID_SIZE),
+                                             (j * SCREEN_HEIGHT // GRID_SIZE),
+                                             SCREEN_WIDTH // GRID_SIZE,
+                                             SCREEN_HEIGHT // GRID_SIZE))
+
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            if board[i][j] == 'X':
+                pygame.draw.line(SCREEN, BLUE, ((i * SCREEN_WIDTH // GRID_SIZE) + 5,
+                                                (j * SCREEN_HEIGHT // GRID_SIZE) + 5),
+                                 ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE - 5,
+                                  (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE - 5),
+                                 5)
+                pygame.draw.line(SCREEN, BLUE, ((i * SCREEN_WIDTH // GRID_SIZE) + 5,
+                                                (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE - 5),
+                                 ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE - 5,
+                                  (j * SCREEN_HEIGHT // GRID_SIZE) + 5),
+                                 5)
+            elif board[i][j] == 'O':
+                pygame.draw.circle(SCREEN, RED, ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2,
+                                                 (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2),
+                                   SCREEN_WIDTH // GRID_SIZE // 2 - 5)
+
+
+    for i in range(GRID_SIZE):
+
+        if board[i][0] == board[i][1] == board[i][2] and board[i][0] != ' ':
+            pygame.draw.line(SCREEN, GREEN, ((0, (i * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2),
+                                             (SCREEN_WIDTH,)), ((i * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2),5)
+
+
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False
+
+
+        if board[0][i] == board[1][i] == board[2][i] and board[0][i] != ' ':
+
+            pygame.draw.line(SCREEN, GREEN, (((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2, 0),
+                                             ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2,
+                                              SCREEN_HEIGHT)))
+
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False
+
+    if board[0][0] == board[1][1] == board[2][2] and board[0][0] != ' ':
+        pygame.draw.line(SCREEN, GREEN, (0,0), (2,2), SCREEN_WIDTH)
+
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    if board[0][2] == board[1][1] == board[2][0] and board[0][2] != ' ':
+        pygame.draw.line(SCREEN, GREEN, (2,0), (0,2), SCREEN_WIDTH)
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    if not any(' ' in row for row in board):
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    pygame.display.update()
+pygame.quit()
+
+
+
+
+
+
+
+
+
+
+
+
+import pygame
+import sys
+
+pygame.init()
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 600
+SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Крестики-нолики')
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+
+GRID_SIZE = 3
+
+board = [[' ' for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+
+current_player = 'X'
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+
+            pos = pygame.mouse.get_pos()
+
+            i = pos[0] // (SCREEN_WIDTH // GRID_SIZE)
+            j = pos[1] // (SCREEN_HEIGHT // GRID_SIZE)
+
+            if board[i][j] == ' ':
+                board[i][j] = current_player
+
+                current_player = 'O' if current_player == 'X' else 'X'
+
+    SCREEN.fill(BLACK)
+
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            pygame.draw.rect(SCREEN, WHITE, ((i * SCREEN_WIDTH // GRID_SIZE),
+                                             (j * SCREEN_HEIGHT // GRID_SIZE),
+                                             SCREEN_WIDTH // GRID_SIZE,
+                                             SCREEN_HEIGHT // GRID_SIZE))
+
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            if board[i][j] == 'X':
+                pygame.draw.line(SCREEN, BLUE, ((i * SCREEN_WIDTH // GRID_SIZE) + 5,
+                                                (j * SCREEN_HEIGHT // GRID_SIZE) + 5),
+                                 ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE - 5,
+                                  (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE - 5),
+                                 5)
+                pygame.draw.line(SCREEN, BLUE, ((i * SCREEN_WIDTH // GRID_SIZE) + 5,
+                                                (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE - 5),
+                                 ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE - 5,
+                                  (j * SCREEN_HEIGHT // GRID_SIZE) + 5),
+                                 5)
+            elif board[i][j] == 'O':
+                pygame.draw.circle(SCREEN, RED, ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2,
+                                                 (j * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2),
+                                   SCREEN_WIDTH // GRID_SIZE // 2 - 5)
+
+    for i in range(GRID_SIZE):
+
+        if board[i][0] == board[i][1] == board[i][2] and board[i][0] != ' ':
+            pygame.draw.line(SCREEN, GREEN, ((0, (i * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2, 5,),(SCREEN_WIDTH)), ((i * SCREEN_HEIGHT // GRID_SIZE) + SCREEN_HEIGHT // GRID_SIZE // 2),5)
+
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False
+
+        if board[0][i] == board[1][i] == board[2][i] and board[0][i] != ' ':
+            pygame.draw.line(SCREEN, GREEN, (((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2, 5),
+                                             ((i * SCREEN_WIDTH // GRID_SIZE) + SCREEN_WIDTH // GRID_SIZE // 2,
+                                              SCREEN_HEIGHT)))
+
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False
+
+    if board[0][0] == board[1][1] == board[2][2] and board[0][0] != ' ':
+        pygame.draw.line(SCREEN, GREEN, (0, 0), (2, 2), SCREEN_WIDTH)
+
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    if board[0][2] == board[1][1] == board[2][0] and board[0][2] != ' ':
+        pygame.draw.line(SCREEN, GREEN, (2, 0), (0, 2), SCREEN_WIDTH)
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    if not any(' ' in row for row in board):
+        pygame.display.update()
+        pygame.time.wait(3000)
+        running = False
+    pygame.display.update()
+pygame.quit()
+
+
+def check_win():
+    for i in range(GRID_SIZE):
+        if board[0][i] == board[1][i] == board[2][i] is not None:
+            print(f'Выйграл {board[i][0]}!')
+            return True
+    for j in range(GRID_SIZE):
+        if board[0][j] == board[1][j] == board[2][j] is not None:
+            print(f'Выйграл {board[0][j]}!')
+            return True
+    if board[0][0] == board[1][1] == board[2][2] is not None:
+        print(f'Выйграл {board[0][0]}!')
+        return True
+    if board[0][2] == board[1][1] == board[2][0] is not None:
+        print(f'Выйграл {board[0][2]}!')
+        return True
+    return False
